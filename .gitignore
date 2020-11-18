@@ -85,3 +85,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+.vscode/settings.json
+.project
+.settings/org.eclipse.buildship.core.prefs
