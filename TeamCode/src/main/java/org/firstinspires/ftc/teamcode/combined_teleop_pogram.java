@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 public class teleop_program extends LinearOpMode {
 
     // Declare OpMode members.
+    DcMotor intake;
     DcMotor FL;
     DcMotor FR;
     DcMotor BL;
@@ -30,7 +31,7 @@ public class teleop_program extends LinearOpMode {
     boolean LeftBumper;
     boolean dpad_right;
     boolean dpad_left;
-
+    boolean button2A;
     double current_power;
     Servo loadingservo;
     boolean GOOD = true;
@@ -48,6 +49,8 @@ public class teleop_program extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+       intake = hardwareMap.dcMotor.get("intake");
+        
         Flywheel1 = hardwareMap.dcMotor.get("Left");
         Flywheel2 = hardwareMap.dcMotor.get("Right");
         Flywheel2.setDirection(DcMotor.Direction.REVERSE);
@@ -84,7 +87,8 @@ public class teleop_program extends LinearOpMode {
             dpad_down = gamepad1.dpad_down;
             dpad_left = gamepad1.dpad_left;
             dpad_right = gamepad1.dpad_right;
-
+            
+            button2A = gamepad2;
 
             if (buttonX = true) {
                 Motor.setPower(0.80);
@@ -226,6 +230,13 @@ public class teleop_program extends LinearOpMode {
                 GOOD = true;
                 sleep(200);
             }
+            
+            if (button2A == true){
+                intake.setPower(1.00);
+                
+            }
+            if (button2A == false);
+            intake.setPower(0.00);
 
             }
         }
@@ -242,3 +253,4 @@ public class teleop_program extends LinearOpMode {
 
 //     telemetry.addData("Status", "Ready to run");    //
 //              telemetry.update();
+
