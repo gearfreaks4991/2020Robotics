@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="combined teleop program")
-    public class combined_teleop_program extends LinearOpMode {
+@TeleOp(name="combined_teleop_program")
+public class combined_teleop_pogram extends LinearOpMode {
 
     // Declare OpMode members.
     DcMotor FL;
