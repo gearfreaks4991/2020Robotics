@@ -30,6 +30,7 @@ public class combined_teleop_pogram extends LinearOpMode {
     boolean LeftBumper;
     boolean dpad_right;
     boolean dpad_left;
+    DcMotor Intake;
 
     double current_power;
     Servo loadingservo;
