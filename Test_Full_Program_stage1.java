@@ -58,8 +58,10 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
 
 
     // additional variables used
-    double current_power;
+    double current_power = 1.0;
     boolean GOOD = true;
+
+
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -162,7 +164,7 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
                 loadingservo.setPosition(0.00);
                 telemetry.addData("Loading.", " ");
                 telemetry.update();
-                wait(2000);
+                wait(200);
                 loadingservo.setPosition(1.00);
                 telemetry.addData("Ready.", " ");
                 telemetry.update();
@@ -185,31 +187,33 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
                 Flywheel1.setPower(current_power);
                 Flywheel2.setPower(current_power);
             }
-            // The code below is used to set "current_power" to 100%
-            // Throttle IN REVERSE when the 'A' button is pushed on the Controller.
-            if (dpad_left) {
-                telemetry.addData("Flywheel Motors Engaged in Reverse. ", " ");
-                telemetry.update();
-                current_power=(-1.00);
-            }
+
             //this button will set "current_power" to 100% throttle
             if (dpad_up) {
                 telemetry.addData("Motors set to Top Goal.", " ,");
                 telemetry.update();
                 current_power=(1.00);
+                Flywheel1.setPower(current_power);
+                Flywheel2.setPower(current_power);
             }
             //this button will set "current_power" to 60% throttle
             if (dpad_right) {
                 telemetry.addData("Motors set to Middle Goal.", " ,");
                 telemetry.update();
                 current_power=(0.60);
+                Flywheel1.setPower(current_power);
+                Flywheel2.setPower(current_power);
             }
+
             //this button will set "current_power" to 30% throttle
             if (dpad_down) {
                 telemetry.addData("Motors set to Bottom Goal.", " ,");
                 telemetry.update();
                 current_power=(0.30);
+                Flywheel1.setPower(current_power);
+                Flywheel2.setPower(current_power);
             }
+            
             // this button will add .05% to "current_power"
             if (buttonX && GOOD) {
                 GOOD = false;
