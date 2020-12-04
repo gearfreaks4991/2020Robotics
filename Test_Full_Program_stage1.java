@@ -40,18 +40,18 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
     
 
     // buttons that will be used to control the robot's functions
-    boolean buttonY;
-    boolean buttonB;
-    boolean buttonA;
-    boolean buttonX;
+    boolean buttonY2;
+    boolean buttonB2;
+    boolean buttonA2;
+    boolean buttonX2;
     float RightTrigger;//this is for loading rings and resetting the flipper
     float LeftTrigger;
     boolean LeftBumper;
     boolean RightBumper;
-    boolean dpad_right;
-    boolean dpad_left;
-    boolean dpad_up;
-    boolean dpad_down;
+    boolean dpad_right2;
+    boolean dpad_left2;
+    boolean dpad_up2;
+    boolean dpad_down2;
 
     float StickX;
     float StickY;
@@ -97,18 +97,18 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            buttonA = gamepad1.a;
-            buttonB = gamepad1.b;
-            buttonX = gamepad1.x;
-            buttonY = gamepad1.y;
+            buttonA2 = gamepad2.a;
+            buttonB2 = gamepad2.b;
+            buttonX2 = gamepad2.x;
+            buttonY2 = gamepad2.y;
             RightTrigger = gamepad1.right_trigger;
             LeftBumper = gamepad1.left_bumper;
             RightBumper = gamepad1.right_bumper;
             LeftTrigger = gamepad1.left_trigger;
-            dpad_up = gamepad1.dpad_up;
-            dpad_down = gamepad1.dpad_down;
-            dpad_left = gamepad1.dpad_left;
-            dpad_right = gamepad1.dpad_right;
+            dpad_up2 = gamepad2.dpad_up;
+            dpad_down2 = gamepad2.dpad_down;
+            dpad_left2 = gamepad2.dpad_left;
+            dpad_right2 = gamepad2.dpad_right;
 
             // The joystick needed to drive the robot.
             StickX = gamepad1.left_stick_x;
@@ -172,7 +172,7 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
             // flywheel motor control
 
             // this button wll set the power to zero
-            if (buttonB) {
+            if (buttonB2) {
                 telemetry.addData("Stopping All Flywheel Motors.", " ");
                 telemetry.update();
                 current_power = Range.clip(current_power, -1, 1);
@@ -180,7 +180,7 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
                 Flywheel2.setPower(0.00);
             }
             // this button will set the power to what ever "current_power" is
-            if (buttonA) {
+            if (buttonA2) {
                 telemetry.addData("All Flywheel Motors Engaged.", " ");
                 telemetry.update();
                 current_power = Range.clip(current_power, -1, 1);
@@ -189,7 +189,7 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
             }
 
             //this button will set "current_power" to 100% throttle
-            if (dpad_up) {
+            if (dpad_up2) {
                 telemetry.addData("Motors set to Top Goal.", " ,");
                 telemetry.update();
                 current_power=(1.00);
@@ -197,7 +197,7 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
                 Flywheel2.setPower(current_power);
             }
             //this button will set "current_power" to 60% throttle
-            if (dpad_right) {
+            if (dpad_right2) {
                 telemetry.addData("Motors set to Middle Goal.", " ,");
                 telemetry.update();
                 current_power=(0.60);
@@ -206,16 +206,16 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
             }
 
             //this button will set "current_power" to 30% throttle
-            if (dpad_down) {
+            if (dpad_down2) {
                 telemetry.addData("Motors set to Bottom Goal.", " ,");
                 telemetry.update();
                 current_power=(0.30);
                 Flywheel1.setPower(current_power);
                 Flywheel2.setPower(current_power);
             }
-            
+
             // this button will add .05% to "current_power"
-            if (buttonX && GOOD) {
+            if (buttonX2 && GOOD) {
                 GOOD = false;
                 telemetry.addData("Current Power Level Is: ", current_power);
                 current_power = (current_power + 0.05);
@@ -228,7 +228,7 @@ public class Test_Full_Program_stage1 extends LinearOpMode {
                 sleep(200);
             }
             // this button will take .05% from "current_power"
-            if (buttonY && GOOD) {
+            if (buttonY2 && GOOD) {
                 GOOD = false;
                 telemetry.addData("Current Power Level Is: ", current_power);
                 current_power = (current_power - 0.05);
