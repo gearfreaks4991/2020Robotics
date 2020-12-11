@@ -20,6 +20,9 @@ public class Wobble_Goal extends LinearOpMode {
     boolean buttonY;
     boolean dpad_down;
     boolean dpad_up;
+    int destination;
+    boolean RightBumper;
+    boolean LeftBumper;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -39,11 +42,12 @@ public class Wobble_Goal extends LinearOpMode {
             buttonY = gamepad2.y;
             dpad_down = gamepad2.dpad_down;
             dpad_up = gamepad2.dpad_up;
-
+//            destination = Rotation.getCurrentPosition();
 
             if (dpad_down){
-                Arm.setPosition(1.00);
-                telemetry.addData("grabbing", " ,");
+                Rotation.setPower(.75);
+                Rotation.setTargetPosition(0);
+                telemetry.addData("retract", " ,");
             }
 
             //This part is the servo code, where it will rotate the arm grabbing the wobble goal, 90 degrees.
@@ -74,26 +78,42 @@ It will take 5,818.5 ticks in order to raise the wobble goal an inch over the fi
 
             if (buttonA) {
                 Rotation.setPower(.65);
-                Rotation.setTargetPosition(100);
-                telemetry.addData("+100", " ,");
+                destination+=100; // plus and equal sign adds 100 and stores 100 as its new base value
+                Rotation.setTargetPosition(destination); // the target is the new value that is equated
+                telemetry.addData("destination", destination);
+                telemetry.update();
             }
 
             //This is resetting the motor to zero, its starting position, so that the wobble goal can be placed down.
 
             if (buttonB) {
                 Rotation.setPower(.65);
-                Rotation.setTargetPosition(0);
-                telemetry.addData("Lifting", " ,");
+                destination-=-100; // minus and equal sign adds 100 and stores 100 as its new base value
+                Rotation.setTargetPosition(destination); // the target is the new value that is equated
+                telemetry.addData("backwards", destination);
+                telemetry.update();
+            }
+            /*if (buttonX) {
+                Rotation.setTargetPosition(192);  //the GoBilda 5202 435rpm motors have 383.6 ticks per rotation.
+                 1/4 of that is how much I need to turn. It is now 95.9
+                 */
+            }
+            if (RightBumper) {
+                Arm.setPosition(1);
+            }
+            if (LeftBumper) {
+                Arm.setPosition(0);
             }
 
             if (dpad_up) {
-                Arm.setPosition(0.00);
-                telemetry.addData("letting go", " ,");
+                Rotation.setPower(.75);
+                Rotation.setTargetPosition(96);
+                telemetry.addData("extend", " ,");
             }
 
 
 
         }
     }
-}
+
 
