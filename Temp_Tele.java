@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Test_Full_Program_stage1")
+@TeleOp(name="Temp_Tele")
 public class Temp_Tele extends LinearOpMode {
 
     //-------------------------------- Drivetrain Motors --------------------------------\\
@@ -34,6 +34,13 @@ public class Temp_Tele extends LinearOpMode {
     DcMotor Flywheel1;
     DcMotor Flywheel2;
 
+    //-----------------------------Wobble goal servo and motor--------------------------------------\\
+
+    //This is the motor for rotating the wobble goal arm. It will rotate downwards 90 degrees for grabbing.
+    DcMotor Rotation;
+    //This servo is for grabbing and letting go of the wobble goals.
+    Servo Arm;
+
     //-------------------------------- Variables --------------------------------\\
 
     // Setting the power of the drivetrain motor variables.
@@ -44,6 +51,16 @@ public class Temp_Tele extends LinearOpMode {
 
 
     // Buttons that will be used to control the robot's functions.
+    boolean buttonA1;  //This button is for adding 100 ticks to the motor as it moves downwards 90 degrees.
+    boolean buttonB1;  //This button is for subtracting 100 ticks to the motor as it moves upwards 90 degrees.
+    boolean buttonX1;  //This button, if used, is to bring the motor to half its ticks per rotation, 95.9.
+    boolean dpad_down1; /*This button, when used, will move the motor to the exact number of ticks,
+                            depending on the position we will find using buttons A and B.
+                            */
+    boolean dpad_up1; //This button, when used, will move the motor to its rest position, pointed upwards.
+    boolean dpad_right1;  //This button is for letting go of the wobble goals.
+    boolean dpad_left1;  //This button is for grabbing the wobble goals.
+    int destination;  //This variable is for storing 100 ticks and adding or subtracting 100 more
     boolean buttonY2; // This button is used to decrease the Flywheel Motors' power by 0.05%.
     boolean buttonB2; // This button is used to bring both of the Flywheel's motors to a complete stop.
     boolean buttonA2; // This button is used to set the Flywheel's power to what the variable current_power's value is.
@@ -107,6 +124,12 @@ public class Temp_Tele extends LinearOpMode {
         // Reversing one of the Flywheel motors to allow them both to spin in the same direction.
         Flywheel2.setDirection(DcMotor.Direction.REVERSE);
 
+        // - Wobble Goal Mechanism Motors.
+        Rotation = hardwareMap.dcMotor.get("lift");
+        Rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Rotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Arm = hardwareMap.servo.get("claw");
+
 
         //-------------------------------- Robot Start Telemetry & WaitForStart Code. --------------------------------\\
 
@@ -121,6 +144,14 @@ public class Temp_Tele extends LinearOpMode {
         while (opModeIsActive()) {
 
             ///-------------------------------- Defining Buttons --------------------------------\\
+
+            buttonA1 = gamepad1.a;
+            buttonB1 = gamepad1.b;
+            buttonX1 = gamepad1.x;
+            dpad_down1 = gamepad1.dpad_down;
+            dpad_up1 = gamepad1.dpad_up;
+            dpad_left1 = gamepad1.dpad_left;
+            dpad_right1 = gamepad1.dpad_right;
 
             buttonA2 = gamepad2.a;
             buttonB2 = gamepad2.b;
@@ -154,7 +185,7 @@ public class Temp_Tele extends LinearOpMode {
             FR_power = (Yvalue1 + Xvalue2);
             BL_power = (Yvalue1 - Xvalue2);
             BR_power = (Yvalue1 + Xvalue2);
-            
+
             if(Xvalue2 > 0 || Xvalue2 < 0) {
                 FL_power = -(Xvalue2);
                 FR_power = +(Xvalue2);
@@ -278,8 +309,44 @@ public class Temp_Tele extends LinearOpMode {
                 FlywheelState = true;
                 sleep(200);
             }
+         //--------------------------------Wobble Goal Arm & Claw control--------------------------\\
+            //This is adding 100 ticks from the motor, so that the motor can be brought closer to its grabbing position.
+            if (buttonA1) {
+                Rotation.setPower(1.00);
+                destination+=100; // plus and equal sign adds 100 and stores 100 as its new base value
+                Rotation.setTargetPosition(destination); // the target is the new value that is equated
+                telemetry.addData("destination", destination);
+                telemetry.update();
+            }
 
-
+            //This is subtracting 100 ticks from the motor, so that the motor can be brought closer to its rest position.
+            if (buttonB1) {
+                Rotation.setPower(1.00);
+                destination-=100; // minus and equal sign subtracts 100 and stores (value-100) as its new base value
+                Rotation.setTargetPosition(destination); // the target is the new value that is equated
+                telemetry.addData("backwards", destination);
+                telemetry.update();
+            }
+            //This portion is the servo letting go of the wobble goals.
+            if (dpad_right1) {
+                Arm.setPosition(1.00);
+            }
+            //This portion is the servo grabbing of the wobble goals.
+            if (dpad_left1) {
+                Arm.setPosition(0.00);
+            }
+            //This is lowering the wobble goal 90 degrees.
+            if (dpad_up1) {
+                Rotation.setPower(1.00);
+                Rotation.setTargetPosition(96);
+                telemetry.addData("lowering arm", " ,");
+            }
+            //This is bringing the wobble goal up 90 degrees.
+            if (dpad_down1){
+                Rotation.setPower(1.00);
+                Rotation.setTargetPosition(0);
+                telemetry.addData("raising arm", " ,");
+            }
 
 
         }
