@@ -65,7 +65,7 @@ public class Temp_Tele extends LinearOpMode {
     //-------------------------------- Misc. Variables --------------------------------\\
 
     // Current_Power is the variable used to define the power of the Flywheel Motors.
-    double current_power = 1.0;
+    double current_power = 1.00;
 
     // The boolean below is used to tell if the power has been increased/decreased in the part of the code which increases and decreases the flywheel motor's power by 0.05%.
     boolean FlywheelState = true;
@@ -154,6 +154,13 @@ public class Temp_Tele extends LinearOpMode {
             FR_power = (Yvalue1 + Xvalue2);
             BL_power = (Yvalue1 - Xvalue2);
             BR_power = (Yvalue1 + Xvalue2);
+            
+            if(Xvalue2 > 0 || Xvalue2 < 0) {
+                FL_power = -(Xvalue2);
+                FR_power = +(Xvalue2);
+                BL_power = -(Xvalue2);
+                BR_power = +(Xvalue2);
+            }
 
             // Makes sure the power levels are locked in-between the values of 1.00% (100%) power and -1.00% (100%) power.
             FL_power = Range.clip(FL_power, -1, 1);
