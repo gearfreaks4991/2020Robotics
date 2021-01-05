@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.util.Range;
 public class Temp_Tele extends LinearOpMode {
 
     //-------------------------------- Drivetrain Motors --------------------------------\\
-
     // Motors are Gobilda 5202 and rotate at around 435 Revolutions/Rotations Per Minute (RPM).
     DcMotor FL;
     DcMotor FR;
@@ -19,17 +18,14 @@ public class Temp_Tele extends LinearOpMode {
     DcMotor BR;
 
     //-------------------------------- Intake Motors --------------------------------\\
-
     // The motor for the Intake is an AndyMark Neverest 40 Motor.
     DcMotor Intake;
 
     //-------------------------------- Flipper Servo --------------------------------\\
-
     // Loadingservo is a smart servo used for our flipper on the robot.
-    Servo loadingservo;
+    Servo Loadingservo;
 
     //-------------------------------- Flywheel Motors --------------------------------\\
-
     // Both Flywheel 1 and Flywheel 2 use AndyMark Neverest 40 Motors.
     DcMotor Flywheel1;
     DcMotor Flywheel2;
@@ -39,7 +35,7 @@ public class Temp_Tele extends LinearOpMode {
     //This is the motor for rotating the wobble goal arm. It will rotate downwards 90 degrees for grabbing.
     DcMotor Rotation;
     //This servo is for grabbing and letting go of the wobble goals.
-    Servo Arm;
+    Servo Claw;
 
     //-------------------------------- Variables --------------------------------\\
 
@@ -51,36 +47,46 @@ public class Temp_Tele extends LinearOpMode {
 
 
     // Buttons that will be used to control the robot's functions.
-    boolean buttonA1;  //This button is for adding 100 ticks to the motor as it moves downwards 90 degrees.
-    boolean buttonB1;  //This button is for subtracting 100 ticks to the motor as it moves upwards 90 degrees.
-    boolean buttonX1;  //This button, if used, is to bring the motor to half its ticks per rotation, 95.9.
-    boolean dpad_down1; /*This button, when used, will move the motor to the exact number of ticks,
+
+    //Gamepad1 Buttons
+    boolean buttonA1;     // Increments the destination variable by 100
+
+    boolean buttonB1;     //This button is for subtracting 100 ticks to the motor as it moves upwards 90 degrees.
+    boolean buttonX1;     //This button, if used, is to bring the motor to half its ticks per rotation, 95.9.
+    boolean buttonY1;     // not used
+    boolean LeftBumper1;  // This is used to start the intake motors to pick up the Rings.
+    boolean RightBumper1; // This is used to load the rings into the storage so they are ready to be loaded into the Flywheel.
+    int rightTrigger1;    // not used
+    int leftTrigger1;     // not used
+    boolean dpad_down1;   /*This button, when used, will move the motor to the exact number of ticks,
                             depending on the position we will find using buttons A and B.
-                            */
+                          */
     boolean dpad_up1; //This button, when used, will move the motor to its rest position, pointed upwards.
     boolean dpad_right1;  //This button is for letting go of the wobble goals.
-    boolean dpad_left1;  //This button is for grabbing the wobble goals.
-    int destination;  //This variable is for storing 100 ticks and adding or subtracting 100 more
+    boolean dpad_left1;     //This button is for grabbing the wobble goals.
+
+    //Gamepad2 Buttons
+
     boolean buttonY2; // This button is used to decrease the Flywheel Motors' power by 0.05%.
     boolean buttonB2; // This button is used to bring both of the Flywheel's motors to a complete stop.
     boolean buttonA2; // This button is used to set the Flywheel's power to what the variable current_power's value is.
     boolean buttonX2; // This button is used to increase the Flywheel Motors' power by 0.05%.
-    float RightTrigger; // This is for loading rings and resetting the flipper.
-    // float LeftTrigger;
-    boolean LeftBumper; // This is used to start the intake motors to pick up the Rings.
-    boolean RightBumper; // This is used to load the rings into the storage so they are ready to be loaded into the Flywheel.
+    //boolean rightBumper2;
+    //boolean leftBumper2;
+    float RightTrigger2; // This is for loading rings and resetting the flipper.
+    // float LeftTrigger2;
+    boolean dpad_down2; // This is used to set the Flywheel Motors to aim at the Bottom Goal.
+    boolean dpad_up2; // This is used to set the Flywheel Motors to aim at the Top Goal.
     boolean dpad_right2; // This is used to set the Flywheel Motors to aim at the Middle Goal.
     // boolean dpad_left2;
-    boolean dpad_up2; // This is used to set the Flywheel Motors to aim at the Top Goal.
-    boolean dpad_down2; // This is used to set the Flywheel Motors to aim at the Bottom Goal.
+
 
     // The X and Y values of the Joystick.
-    float StickX;
-    float StickY;
-
+    float StickX2;
+    float StickY2;
+    int destination=0;  //This variable is for storing 100 ticks and adding or subtracting 100 more
 
     //-------------------------------- Misc. Variables --------------------------------\\
-
     // Current_Power is the variable used to define the power of the Flywheel Motors.
     double current_power = 1.00;
 
@@ -98,10 +104,10 @@ public class Temp_Tele extends LinearOpMode {
 
 
         // Hardware mapping the Drivetrain's 4 main drive motors, they should be Gobilda 5202 which spin at 435 RPM.
-        FL = hardwareMap.dcMotor.get("FL");
-        FR = hardwareMap.dcMotor.get("FR");
-        BL = hardwareMap.dcMotor.get("BL");
-        BR = hardwareMap.dcMotor.get("BR");
+        FL = hardwareMap.dcMotor.get("lf");
+        FR = hardwareMap.dcMotor.get("rf");
+        BL = hardwareMap.dcMotor.get("lb");
+        BR = hardwareMap.dcMotor.get("rb");
 
         // Reversing 2 of the Drivetrain motors to allow the wheels to all move in the correct direction.
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -110,25 +116,30 @@ public class Temp_Tele extends LinearOpMode {
 
 
         // - Intake Motor, uses a single AndyMark Neverest 40 Motor.
-        Intake = hardwareMap.dcMotor.get("Intake");
+        Intake = hardwareMap.dcMotor.get("intake");
 
 
         // - Flipper Servo.
-        loadingservo = hardwareMap.servo.get("flipper");
+        Loadingservo = hardwareMap.servo.get("flipper");
 
 
         // - Flywheel Motors, which are both AndyMark Neverest 40 Motors.
-        Flywheel1 = hardwareMap.dcMotor.get("Left");
-        Flywheel2 = hardwareMap.dcMotor.get("Right");
+        Flywheel1 = hardwareMap.dcMotor.get("flyl");
+        Flywheel2 = hardwareMap.dcMotor.get("flyr");
 
         // Reversing one of the Flywheel motors to allow them both to spin in the same direction.
         Flywheel2.setDirection(DcMotor.Direction.REVERSE);
 
         // - Wobble Goal Mechanism Motors.
-        Rotation = hardwareMap.dcMotor.get("lift");
-        Rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Rotation = hardwareMap.dcMotor.get("rotation");
         Rotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Arm = hardwareMap.servo.get("claw");
+        Rotation.setTargetPosition(0);
+        Rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        Claw = hardwareMap.servo.get("claw");
+
+//        Rotation.setTargetPosition(0);
 
 
         //-------------------------------- Robot Start Telemetry & WaitForStart Code. --------------------------------\\
@@ -141,7 +152,9 @@ public class Temp_Tele extends LinearOpMode {
         waitForStart();
 
 
+
         while (opModeIsActive()) {
+
 
             ///-------------------------------- Defining Buttons --------------------------------\\
 
@@ -157,9 +170,9 @@ public class Temp_Tele extends LinearOpMode {
             buttonB2 = gamepad2.b;
             buttonX2 = gamepad2.x;
             buttonY2 = gamepad2.y;
-            RightTrigger = gamepad1.right_trigger;
-            LeftBumper = gamepad1.left_bumper;
-            RightBumper = gamepad1.right_bumper;
+            RightTrigger2 = gamepad2.right_trigger;
+            LeftBumper1 = gamepad1.left_bumper;
+            RightBumper1 = gamepad1.right_bumper;
             // LeftTrigger = gamepad1.left_trigger;
             dpad_up2 = gamepad2.dpad_up;
             dpad_down2 = gamepad2.dpad_down;
@@ -167,30 +180,27 @@ public class Temp_Tele extends LinearOpMode {
             dpad_right2 = gamepad2.dpad_right;
 
 
-            // The joystick values needed to drive the robot.
-            StickX = gamepad1.left_stick_x;
-            StickY = gamepad1.left_stick_y;
-
             //-------------------------------- Drivetrain Calculations & Code --------------------------------\\
 
             // Gets the values of the joystick.
-            float Yvalue1 = gamepad1.left_stick_y;
+            float Yvalue1 = -gamepad1.left_stick_y;
+            float Xvalue1 = gamepad1.left_stick_x;
             float Xvalue2 = gamepad1.right_stick_x;
 
             // check to see if any buttons are pressed.
 
 
             // Calculates the power of all the wheels of the Drivetrain.
-            FL_power = (Yvalue1 - Xvalue2);
-            FR_power = (Yvalue1 + Xvalue2);
-            BL_power = (Yvalue1 - Xvalue2);
-            BR_power = (Yvalue1 + Xvalue2);
+            FL_power = (Yvalue1 + Xvalue1);
+            FR_power = (Yvalue1 - Xvalue1);
+            BL_power = (Yvalue1 - Xvalue1);
+            BR_power = (Yvalue1 + Xvalue1);
 
             if(Xvalue2 > 0 || Xvalue2 < 0) {
-                FL_power = -(Xvalue2);
-                FR_power = +(Xvalue2);
-                BL_power = -(Xvalue2);
-                BR_power = +(Xvalue2);
+                FL_power = + (Xvalue2);
+                FR_power = - (Xvalue2);
+                BL_power = + (Xvalue2);
+                BR_power = - (Xvalue2);
             }
 
             // Makes sure the power levels are locked in-between the values of 1.00% (100%) power and -1.00% (100%) power.
@@ -210,16 +220,16 @@ public class Temp_Tele extends LinearOpMode {
 
 
             // Taking in the Rings.
-            if (RightBumper == true) {
-                Intake.setPower(0.80);
+            if (RightBumper1 == true) {
+                Intake.setPower(1.00);
             }
             else{
                 Intake.setPower(0.00);
             }
 
             // Pushing out the Rings.
-            if (LeftBumper == true) {
-                Intake.setPower(-0.80);
+            if (LeftBumper1 == true) {
+                Intake.setPower(-1.00);
             }
             else{
                 Intake.setPower(0.00);
@@ -227,12 +237,12 @@ public class Temp_Tele extends LinearOpMode {
 
             //-------------------------------- Flipper Code --------------------------------\\
             // This portion of the code will load the rings into the Flywheel to fire them to the set goal.
-            if (RightTrigger > 0.1) {
-                loadingservo.setPosition(0.00);
+            if (RightTrigger2 > 0.1) {
+                Loadingservo.setPosition(0.00);
                 telemetry.addData("Loading Rings into Flywheel.", " ");
                 telemetry.update();
-                wait(200);
-                loadingservo.setPosition(1.00);
+                sleep(200);
+                Loadingservo.setPosition(1.00);
                 telemetry.addData("Returning to resting position.", " ");
                 telemetry.update();
             }
@@ -309,13 +319,18 @@ public class Temp_Tele extends LinearOpMode {
                 FlywheelState = true;
                 sleep(200);
             }
-         //--------------------------------Wobble Goal Arm & Claw control--------------------------\\
+
+
+
+            //--------------------------------Wobble Goal Arm & Claw control--------------------------\\
             //This is adding 100 ticks from the motor, so that the motor can be brought closer to its grabbing position.
             if (buttonA1) {
                 Rotation.setPower(1.00);
                 destination+=100; // plus and equal sign adds 100 and stores 100 as its new base value
-                Rotation.setTargetPosition(destination); // the target is the new value that is equated
+                sleep (500);
                 telemetry.addData("destination", destination);
+                Rotation.setTargetPosition(destination); // the target is the new value that is equated
+                telemetry.addData("destination", Rotation.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -323,17 +338,19 @@ public class Temp_Tele extends LinearOpMode {
             if (buttonB1) {
                 Rotation.setPower(1.00);
                 destination-=100; // minus and equal sign subtracts 100 and stores (value-100) as its new base value
+                telemetry.addData("destination", destination);
                 Rotation.setTargetPosition(destination); // the target is the new value that is equated
-                telemetry.addData("backwards", destination);
+                sleep (500);
+                telemetry.addData("backwards", Rotation.getCurrentPosition());
                 telemetry.update();
             }
             //This portion is the servo letting go of the wobble goals.
             if (dpad_right1) {
-                Arm.setPosition(1.00);
+                Claw.setPosition(1.00);
             }
             //This portion is the servo grabbing of the wobble goals.
             if (dpad_left1) {
-                Arm.setPosition(0.00);
+                Claw.setPosition(0.00);
             }
             //This is lowering the wobble goal 90 degrees.
             if (dpad_up1) {
