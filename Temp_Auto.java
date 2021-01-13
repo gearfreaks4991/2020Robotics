@@ -44,6 +44,8 @@ public class Temp_Auto extends LinearOpMode {
     // additional variables used
     double current_power;
     boolean GOOD = true;
+    int right = 1;
+    int left = 0;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -89,43 +91,43 @@ public class Temp_Auto extends LinearOpMode {
         waitForStart();
 
         // while (opModeIsActive()) {
+
+        mcdrive(120);
+
+        mcdrive(-54);
+
+        mcstrafe(30 , right);
+
+        Flywheel1.setPower(1.00);
+        Flywheel2.setPower(1.00);
+        loadingservo.setPosition(0.00);
+        wait(300);
+        loadingservo.setPosition(1.00);
+        wait(200);
+        loadingservo.setPosition(0.00);
+        wait(300);
+        loadingservo.setPosition(1.00);
+        wait(200);
+        loadingservo.setPosition(0.00);
+        wait(300);
+        loadingservo.setPosition(1.00);
+        Flywheel1.setPower(0.00);
+        Flywheel2.setPower(0.00);
+
+
+
+        mcdrive(9);
+
         
-            mcdrive(120);
-
-            mcdrive(-54);
-
-            //  strafe(-30);
-
-            Flywheel1.setPower(1.00);
-            Flywheel2.setPower(1.00);
-            loadingservo.setPosition(0.00);
-            wait(300);
-            loadingservo.setPosition(1.00);
-            wait(200);
-            loadingservo.setPosition(0.00);
-            wait(300);
-            loadingservo.setPosition(1.00);
-            wait(200);
-            loadingservo.setPosition(0.00);
-            wait(300);
-            loadingservo.setPosition(1.00);
-            Flywheel1.setPower(0.00);
-            Flywheel2.setPower(0.00);
-
-            // strafe(+12);
-
-            mcdrive(-66);
-
-            // mcdrive(1);
 
 
-            // This Program uses: Gobilda 5202 435 RPM motors.
-            // Which has 383.6 ticks per/Revolution. Our wheel are 4" in diameter.
-            // Circumference is 12.5663706144".
-            // Approx. 30.5251030464" Ticks Per Inch.
-            }
+        // This Program uses: Gobilda 5202 435 RPM motors.
+        // Which has 383.6 ticks per/Revolution. Our wheel are 4" in diameter.
+        // Circumference is 12.5663706144".
+        // Approx. 30.5251030464" Ticks Per Inch.
+    }
 
-            public void mcdrive(double inches) {
+    public void mcdrive(double inches) {
 
                 /*
                 FL_power = (Yvalue1 - Xvalue1);
@@ -134,150 +136,163 @@ public class Temp_Auto extends LinearOpMode {
                 BR_power = (Yvalue1 + Xvalue1);
                 */
 
-                float distance = (((float) inches) * (float) 30.5251030464);
-                int distance_int = Math.round(distance);
+        float distance = (((float) inches) * (float) 30.5251030464);
+        int distance_int = Math.round(distance);
 
-                int target_position_FL;
-                int target_position_FR;
-                int target_position_BL;
-                int target_position_BR;
+        int target_position_FL;
+        int target_position_FR;
+        int target_position_BL;
+        int target_position_BR;
 
-                target_position_FL = (FL.getCurrentPosition() + distance_int);
-                target_position_FR = (FR.getCurrentPosition() + distance_int);
-                target_position_BL = (BL.getCurrentPosition() + distance_int);
-                target_position_BR = (BR.getCurrentPosition() + distance_int);
+        target_position_FL = (FL.getCurrentPosition() + distance_int);
+        target_position_FR = (FR.getCurrentPosition() + distance_int);
+        target_position_BL = (BL.getCurrentPosition() + distance_int);
+        target_position_BR = (BR.getCurrentPosition() + distance_int);
 
-                FL.setPower(1.00);
-                FR.setPower(1.00);
-                BL.setPower(1.00);
-                BR.setPower(1.00);
+        FL.setPower(1.00);
+        FR.setPower(1.00);
+        BL.setPower(1.00);
+        BR.setPower(1.00);
 
-                FL.setTargetPosition(target_position_FL);
-                FR.setTargetPosition(target_position_FR);
-                BL.setTargetPosition(target_position_BL);
-                BR.setTargetPosition(target_position_BR);
+        FL.setTargetPosition(target_position_FL);
+        FR.setTargetPosition(target_position_FR);
+        BL.setTargetPosition(target_position_BL);
+        BR.setTargetPosition(target_position_BR);
 
-                FL.setPower(0.00);
-                FR.setPower(0.00);
-                BL.setPower(0.00);
-                BR.setPower(0.00);
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BL.setPower(0.00);
+        BR.setPower(0.00);
 
-                while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
-
-
-            }
-
-            public void turnLeft(double inches) {
-
-                float distance = (((float) inches) * (float) 30.5251030464);
-                int distance_int = Math.round(distance);
-
-                int target_position_FL;
-                int target_position_FR;
-                int target_position_BL;
-                int target_position_BR;
-
-                target_position_FL = (FL.getCurrentPosition() - distance_int);
-                target_position_FR = (FR.getCurrentPosition() + distance_int);
-                target_position_BL = (BL.getCurrentPosition() - distance_int);
-                target_position_BR = (BR.getCurrentPosition() + distance_int);
-
-                FL.setPower(1.00);
-                FR.setPower(1.00);
-                BL.setPower(1.00);
-                BR.setPower(1.00);
-
-                FL.setTargetPosition(target_position_FL);
-                FR.setTargetPosition(target_position_FR);
-                BL.setTargetPosition(target_position_BL);
-                BR.setTargetPosition(target_position_BR);
-
-                FL.setPower(0.00);
-                FR.setPower(0.00);
-                BL.setPower(0.00);
-                BR.setPower(0.00);
-
-                while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
-            }
+        while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
 
 
+    }
+
+    public void turnLeft(double inches) {
+
+        float distance = (((float) inches) * (float) 30.5251030464);
+        int distance_int = Math.round(distance);
+
+        int target_position_FL;
+        int target_position_FR;
+        int target_position_BL;
+        int target_position_BR;
+
+        target_position_FL = (FL.getCurrentPosition() - distance_int);
+        target_position_FR = (FR.getCurrentPosition() + distance_int);
+        target_position_BL = (BL.getCurrentPosition() - distance_int);
+        target_position_BR = (BR.getCurrentPosition() + distance_int);
+
+        FL.setPower(1.00);
+        FR.setPower(1.00);
+        BL.setPower(1.00);
+        BR.setPower(1.00);
+
+        FL.setTargetPosition(target_position_FL);
+        FR.setTargetPosition(target_position_FR);
+        BL.setTargetPosition(target_position_BL);
+        BR.setTargetPosition(target_position_BR);
+
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BL.setPower(0.00);
+        BR.setPower(0.00);
+
+        while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
+    }
 
 
 
-            public void turnRight(double inches) {
-
-                float distance = (((float) inches) * (float) 30.5251030464);
-                int distance_int = Math.round(distance);
-
-                int target_position_FL;
-                int target_position_FR;
-                int target_position_BL;
-                int target_position_BR;
-
-                target_position_FL = (FL.getCurrentPosition() + distance_int);
-                target_position_FR = (FR.getCurrentPosition() - distance_int);
-                target_position_BL = (BL.getCurrentPosition() + distance_int);
-                target_position_BR = (BR.getCurrentPosition() - distance_int);
-
-                FL.setPower(1.00);
-                FR.setPower(1.00);
-                BL.setPower(1.00);
-                BR.setPower(1.00);
-
-                FL.setTargetPosition(target_position_FL);
-                FR.setTargetPosition(target_position_FR);
-                BL.setTargetPosition(target_position_BL);
-                BR.setTargetPosition(target_position_BR);
-
-                FL.setPower(0.00);
-                FR.setPower(0.00);
-                BL.setPower(0.00);
-                BR.setPower(0.00);
-
-                while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
-            }
-            /*public void mcstrafe(double inches) {
 
 
-                        FL_power = (Yvalue1 - Xvalue1);
-                        FR_power = (Yvalue1 + Xvalue1);
-                        BL_power = (Yvalue1 - Xvalue1);
-                        BR_power = (Yvalue1 + Xvalue1);
+    public void turnRight(double inches) {
+
+        float distance = (((float) inches) * (float) 30.5251030464);
+        int distance_int = Math.round(distance);
+
+        int target_position_FL;
+        int target_position_FR;
+        int target_position_BL;
+        int target_position_BR;
+
+        target_position_FL = (FL.getCurrentPosition() + distance_int);
+        target_position_FR = (FR.getCurrentPosition() - distance_int);
+        target_position_BL = (BL.getCurrentPosition() + distance_int);
+        target_position_BR = (BR.getCurrentPosition() - distance_int);
+
+        FL.setPower(1.00);
+        FR.setPower(1.00);
+        BL.setPower(1.00);
+        BR.setPower(1.00);
+
+        FL.setTargetPosition(target_position_FL);
+        FR.setTargetPosition(target_position_FR);
+        BL.setTargetPosition(target_position_BL);
+        BR.setTargetPosition(target_position_BR);
+
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BL.setPower(0.00);
+        BR.setPower(0.00);
+
+        while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
+    }
+    public void mcstrafe(double inches, int direction) {
 
 
-                float distance = (((float) inches) * (float) 30.5251030464);
-                int distance_int = Math.round(distance);
-
-                int target_position_FL;
-                int target_position_FR;
-                int target_position_BL;
-                int target_position_BR;
-
-                target_position_FL = (FL.getCurrentPosition() + distance_int);
-                target_position_FR = (FR.getCurrentPosition() + distance_int);
-                target_position_BL = (BL.getCurrentPosition() + distance_int);
-                target_position_BR = (BR.getCurrentPosition() + distance_int);
-
-                FL.setPower(1.00);
-                FR.setPower(1.00);
-                BL.setPower(1.00);
-                BR.setPower(1.00);
-
-                FL.setTargetPosition(target_position_FL);
-                FR.setTargetPosition(target_position_FR);
-                BL.setTargetPosition(target_position_BL);
-                BR.setTargetPosition(target_position_BR);
-
-                FL.setPower(0.00);
-                FR.setPower(0.00);
-                BL.setPower(0.00);
-                BR.setPower(0.00);
-
-                while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
+        float distance = (((float) inches) * (float) 30.5251030464);
+        int distance_int = Math.round(distance);
 
 
-            }
-            */
+        int target_position_FL;
+        int target_position_FR;
+        int target_position_BL;
+        int target_position_BR;
+
+        if(direction == 1){
+            target_position_FL = (FL.getCurrentPosition() + distance_int);
+            target_position_FR = (FR.getCurrentPosition() - distance_int);
+            target_position_BL = (BL.getCurrentPosition() + distance_int);
+            target_position_BR = (BR.getCurrentPosition() - distance_int);
+
+            FL.setTargetPosition(target_position_FL);
+            FR.setTargetPosition(target_position_FR);
+            BL.setTargetPosition(target_position_BL);
+            BR.setTargetPosition(target_position_BR);
+
+        }
+
+        if (direction == 0){
+            target_position_FL = (FL.getCurrentPosition() - distance_int);
+            target_position_FR = (FR.getCurrentPosition() + distance_int);
+            target_position_BL = (BL.getCurrentPosition() - distance_int);
+            target_position_BR = (BR.getCurrentPosition() + distance_int);
+
+            FL.setTargetPosition(target_position_FL);
+            FR.setTargetPosition(target_position_FR);
+            BL.setTargetPosition(target_position_BL);
+            BR.setTargetPosition(target_position_BR);
+        }
+
+
+        FL.setPower(1.00);
+        FR.setPower(1.00);
+        BL.setPower(1.00);
+        BR.setPower(1.00);
+
+
+
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BL.setPower(0.00);
+        BR.setPower(0.00);
+
+        while(FL.isBusy());
+
+
+    }
+
 
 
 }
