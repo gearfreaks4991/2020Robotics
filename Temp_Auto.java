@@ -167,7 +167,7 @@ public class Temp_Auto extends LinearOpMode {
 
             }
 
-            public void turn(double inches) {
+            public void turnLeft(double inches) {
 
                 float distance = (((float) inches) * (float) 30.5251030464);
                 int distance_int = Math.round(distance);
@@ -177,9 +177,9 @@ public class Temp_Auto extends LinearOpMode {
                 int target_position_BL;
                 int target_position_BR;
 
-                target_position_FL = (FL.getCurrentPosition() + distance_int);
+                target_position_FL = (FL.getCurrentPosition() - distance_int);
                 target_position_FR = (FR.getCurrentPosition() + distance_int);
-                target_position_BL = (BL.getCurrentPosition() + distance_int);
+                target_position_BL = (BL.getCurrentPosition() - distance_int);
                 target_position_BR = (BR.getCurrentPosition() + distance_int);
 
                 FL.setPower(1.00);
@@ -198,19 +198,44 @@ public class Temp_Auto extends LinearOpMode {
                 BR.setPower(0.00);
 
                 while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
-
-
-
-
-
-
-
-
-
-
             }
 
 
+
+
+
+            public void turnRight(double inches) {
+
+                float distance = (((float) inches) * (float) 30.5251030464);
+                int distance_int = Math.round(distance);
+
+                int target_position_FL;
+                int target_position_FR;
+                int target_position_BL;
+                int target_position_BR;
+
+                target_position_FL = (FL.getCurrentPosition() + distance_int);
+                target_position_FR = (FR.getCurrentPosition() - distance_int);
+                target_position_BL = (BL.getCurrentPosition() + distance_int);
+                target_position_BR = (BR.getCurrentPosition() - distance_int);
+
+                FL.setPower(1.00);
+                FR.setPower(1.00);
+                BL.setPower(1.00);
+                BR.setPower(1.00);
+
+                FL.setTargetPosition(target_position_FL);
+                FR.setTargetPosition(target_position_FR);
+                BL.setTargetPosition(target_position_BL);
+                BR.setTargetPosition(target_position_BR);
+
+                FL.setPower(0.00);
+                FR.setPower(0.00);
+                BL.setPower(0.00);
+                BR.setPower(0.00);
+
+                while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
+            }
             /*public void mcstrafe(double inches) {
 
 
