@@ -10,14 +10,12 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="Temp_Auto")
 public class Temp_Auto extends LinearOpMode {
-    //drivetrain motors
     // Motors are Gobilda 5202 and rotate at around 435 Revolutions/Rotations Per Minute (RPM)
     DcMotor FL;
     DcMotor FR;
     DcMotor BL;
     DcMotor BR;
 
-    // - drivetrain power variables
     // Setting the power of the drivetrain motor variables.
 
     double FL_power = 0.0;
@@ -30,18 +28,20 @@ public class Temp_Auto extends LinearOpMode {
     double Xvalue2 = 0.0;
 
     // Intake motor
-    // - motor type and variable name
     DcMotor Intake; //This is using an AndyMark Neverest 40 Motor
+
     // Flipper motor
     // lodingservo is a smart servo used for our flipper on the robot
     Servo loadingservo;
+
     // Fly wheel motors
+
     DcMotor Flywheel1;
     DcMotor Flywheel2;
     //both Flywheel1 and Flywheel2 are neverrest 40's
 
 
-    // additional variables used
+    // additional variables
     double current_power;
     boolean GOOD = true;
     int right = 1;
@@ -52,8 +52,6 @@ public class Temp_Auto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // harware mapping
-        // - drivetrain
         // Hardware mapping the Drivetrain's 4 main drive motors,
         // they should be Gobilda 5202 which spin at 435 RPM.
         FL = hardwareMap.dcMotor.get("lf");
@@ -90,35 +88,32 @@ public class Temp_Auto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+
+
         // while (opModeIsActive()) {
 
-        mcdrive(120);
 
-        mcdrive(-54);
 
-        mcstrafe(30 , right);
+        /* The portion of code below should do the following, in order:
 
-        Flywheel1.setPower(1.00);
-        Flywheel2.setPower(1.00);
-        loadingservo.setPosition(0.00);
+        1: Drive from the starting position 102 Inches forward, to push the Wobble Goal into the dropoff zone.
+
+        2: Drive from the Dropoff Zone backwards 39.8 Inches so that the robot is located BEHIND the Firing Line.
+
+        3: Strafe 12 Inches to the right so that it is lined up with the Power Shot.
+
+        I believe that after this, we would need to integrate other Autonomous Codes into this one, or make one large Main Code.
+
+
+        If we are starting on the left, we need to add an additional 24 Inches to the Strafe portion, in total 36 Inches, due to it being farther away from the middle.
+        */
+
+        mcdrive(102);
         wait(300);
-        loadingservo.setPosition(1.00);
-        wait(200);
-        loadingservo.setPosition(0.00);
+        mcdrive(-39.8);
         wait(300);
-        loadingservo.setPosition(1.00);
-        wait(200);
-        loadingservo.setPosition(0.00);
-        wait(300);
-        loadingservo.setPosition(1.00);
-        Flywheel1.setPower(0.00);
-        Flywheel2.setPower(0.00);
+        mcstrafe(12,right);
 
-
-
-        mcdrive(9);
-
-        
 
 
         // This Program uses: Gobilda 5202 435 RPM motors.
