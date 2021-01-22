@@ -55,7 +55,6 @@ public class blue_power_shot extends LinearOpMode {
         BL.setDirection(DcMotor.Direction.REVERSE);
 
 
-
         // - Intake Motor, uses a single AndyMark Neverest 40 Motor.
         Intake = hardwareMap.dcMotor.get("intake");
 
@@ -93,54 +92,82 @@ public class blue_power_shot extends LinearOpMode {
         waitForStart();
 
 
-
-        while (RunOpMode()) {
+         runOpMode(); {
 
             //-------------------------------- Variables and Step-By-Step Code --------------------------------\\
 
 
-            int right = 1
-            int left = 0
+            int right = 1;
+            int left = 0;
             // check to see if any buttons are pressed.
 
-            //Step 1  -  Drive Forward 60 inches (12.566 is the circumfernce.) (4.77 rotations for 60 inches) (1829.77 ticks in 60 inches)
+            /*Step 1  -  Drive Forward 62 inches
+            (12.566 is the circumference.) (4.93 rotations for 62 inches)
+            (1891.148 ticks in 62 inches) (I rounded to 1891)
+            */
             FL.setPower(1.00);
             FR.setPower(1.00);
             BR.setPower(1.00);
             BL.setPower(1.00);
-            FL.setTargetPosition(1830);
-            FR.setTargetPosition(1830);
-            BR.setTargetPosition(1830);
-            BL.setTargetPosition(1830);
+            FL.setTargetPosition(1891);
+            FR.setTargetPosition(1891);
+            BR.setTargetPosition(1891);
+            BL.setTargetPosition(1891);
             while (FL.isBusy());
-
-            //Step 3  -  Strafe Right
-            mcstrafe(9.00,right); //This is a placeholder amount of inches until it is measured
-
-            //Step 4  -  Stop (#) inches from right wall (lined up for the first goal)
-                //This will be checked in person and should work because of the class
-
-            //Step 5  -  Start Flywheel
+            /*Step 3  -  Strafe Right 30 inches (This is still experimental)
+            (12.566 is the circumference.) (2.39 rotations for 30 inches)
+            (915.804 ticks in 30 inches) (I rounded to 916)
+            */
+            FL.setPower(-1.00);
+            FR.setPower(1.00);
+            BL.setPower(1.00);
+            BR.setPower(-1.00);
+            FL.setTargetPosition(916);
+            FR.setTargetPosition(916);
+            BL.setTargetPosition(916);
+            BR.setTargetPosition(916);
+            //Step 4  -  Start Flywheel
             Flywheel1.setPower(1.00);
-            FLywheel2.setPower(1.00);
-            //Step 6  -  Load Flywheel using Flipper
+            Flywheel2.setPower(1.00);
+            //Step 5  -  Load Flywheel using Flipper
             Loadingservo.setPosition(0.00);
             sleep(500);
             Loadingservo.setPosition(1.00);
-            //Step 7  -  Strafe to and Shoot at Middle Goal
-            mcstrafe(4.00,right);
+            /*Step 6  -  Strafe to the right and Shoot at Middle Goal - Strafe Right 8 inches (This is still experimental)
+            (12.566 is the circumference.) (0.636 rotations for 8 inches)
+            (244.216 ticks in 30 inches) (I rounded to 244)
+            */
+            FL.setPower(-1.00);
+            FR.setPower(1.00);
+            BL.setPower(1.00);
+            BR.setPower(-1.00);
+            FL.setTargetPosition(244);
+            FR.setTargetPosition(244);
+            BL.setTargetPosition(244);
+            BR.setTargetPosition(244);
+            sleep(300);
             Loadingservo.setPosition(0.00);
             sleep(500);
             Loadingservo.setPosition(1.00);
-            //Step 8  -  Strafe to and Shoot at Right Goal
-            mcstrafe(4.00,right);
+            //Step 7  -  Strafe to the right and Shoot at Right Goal
+            FL.setPower(-1.00);
+            FR.setPower(1.00);
+            BL.setPower(1.00);
+            BR.setPower(-1.00);
+            FL.setTargetPosition(244);
+            FR.setTargetPosition(244);
+            BL.setTargetPosition(244);
+            BR.setTargetPosition(244);
+            sleep(300);
             Loadingservo.setPosition(0.00);
             sleep(500);
             Loadingservo.setPosition(1.00);
+            sleep(300);
             Flywheel1.setPower(0.00);
-            FLywheel2.setPower(0.00);
-            /*Step 9  -  Park on white line - I need to go 9 inches forward
-            (12.566 inches is the circumfernce.) (9/12.566=0.716) (0.716x383.6=274.74 ticks) (I rounded to 275)
+            Flywheel2.setPower(0.00);
+            /*Step 8  -  Park on white line - I need to go 9 inches forward
+            (12.566 inches is the circumference.) (9/12.566=0.716)
+            (0.716x383.6=274.74 ticks) (I rounded to 275)
            */
             FL.setPower(1.00);
             FR.setPower(1.00);
@@ -151,61 +178,5 @@ public class blue_power_shot extends LinearOpMode {
             BR.setTargetPosition(275);
             BL.setTargetPosition(275);
         }
-        public void mcstrafe(double inches, int direction) {
-
-
-            float distance = (((float) inches) * (float) 30.5251030464);
-            int distance_int = Math.round(distance);
-
-
-            int target_position_FL;
-            int target_position_FR;
-            int target_position_BL;
-            int target_position_BR;
-
-            if(direction == 1){
-                target_position_FL = (FL.getCurrentPosition() + distance_int);
-                target_position_FR = (FR.getCurrentPosition() - distance_int);
-                target_position_BL = (BL.getCurrentPosition() + distance_int);
-                target_position_BR = (BR.getCurrentPosition() - distance_int);
-
-                FL.setTargetPosition(target_position_FL);
-                FR.setTargetPosition(target_position_FR);
-                BL.setTargetPosition(target_position_BL);
-                BR.setTargetPosition(target_position_BR);
-
-            }
-
-            if (direction == 0){
-                target_position_FL = (FL.getCurrentPosition() - distance_int);
-                target_position_FR = (FR.getCurrentPosition() + distance_int);
-                target_position_BL = (BL.getCurrentPosition() - distance_int);
-                target_position_BR = (BR.getCurrentPosition() + distance_int);
-
-                FL.setTargetPosition(target_position_FL);
-                FR.setTargetPosition(target_position_FR);
-                BL.setTargetPosition(target_position_BL);
-                BR.setTargetPosition(target_position_BR);
-            }
-
-
-            FL.setPower(1.00);
-            FR.setPower(1.00);
-            BL.setPower(1.00);
-            BR.setPower(1.00);
-
-
-
-            FL.setPower(0.00);
-            FR.setPower(0.00);
-            BL.setPower(0.00);
-            BR.setPower(0.00);
-
-            while(FL.isBusy());
-
-
-        }
-
-
-
     }
+}
