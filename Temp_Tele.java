@@ -32,7 +32,8 @@ public class Temp_Tele extends LinearOpMode {
 
     //-----------------------------Wobble goal servo and motor--------------------------------------\\
 
-    //This is the motor for rotating the wobble goal arm. It will rotate downwards 90 degrees for grabbing.
+    //This is the motor for rotating the wobble goal arm. It will rotate downwards 150
+    // degrees for grabbing.
     DcMotor Rotation;
     //This servo is for grabbing and letting go of the wobble goals.
     Servo Claw;
@@ -352,17 +353,19 @@ public class Temp_Tele extends LinearOpMode {
             if (dpad_left1) {
                 Claw.setPosition(0.00);
             }
-            //This is lowering the wobble goal 90 degrees.
+            //This is resetting the wobble goal.
             if (dpad_up1) {
                 Rotation.setPower(1.00);
-                Rotation.setTargetPosition(96);
-                telemetry.addData("lowering arm", " ,");
+                Rotation.setTargetPosition(-400);
+                telemetry.addData("resetting arm", " ");
+                telemetry.update();
             }
-            //This is bringing the wobble goal up 90 degrees.
+            //This is lowering the wobble goal.
             if (dpad_down1){
                 Rotation.setPower(1.00);
-                Rotation.setTargetPosition(0);
-                telemetry.addData("raising arm", " ,");
+                Rotation.setTargetPosition(-4600);
+                telemetry.addData("lowering arm", " ,");
+                telemetry.update();
             }
 
 
