@@ -49,6 +49,14 @@ public class blue_power_shot extends LinearOpMode {
         FR = hardwareMap.dcMotor.get("rf");
         BL = hardwareMap.dcMotor.get("lb");
         BR = hardwareMap.dcMotor.get("rb");
+        FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Reversing 2 of the Drivetrain motors to allow the wheels to all move in the correct direction.
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -91,92 +99,91 @@ public class blue_power_shot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY).
         waitForStart();
 
-
-         runOpMode(); {
-
             //-------------------------------- Variables and Step-By-Step Code --------------------------------\\
 
-
-            int right = 1;
-            int left = 0;
             // check to see if any buttons are pressed.
 
             /*Step 1  -  Drive Forward 62 inches
             (12.566 is the circumference.) (4.93 rotations for 62 inches)
             (1891.148 ticks in 62 inches) (I rounded to 1891)
             */
-            FL.setPower(1.00);
-            FR.setPower(1.00);
-            BR.setPower(1.00);
-            BL.setPower(1.00);
-            FL.setTargetPosition(1891);
-            FR.setTargetPosition(1891);
-            BR.setTargetPosition(1891);
-            BL.setTargetPosition(1891);
-            while (FL.isBusy());
-            /*Step 3  -  Strafe Right 30 inches (This is still experimental)
+            FL.setPower(0.75);
+            FR.setPower(0.75);
+            BR.setPower(0.75);
+            BL.setPower(0.75);
+            sleep(1300);
+            FL.setPower(0.00);
+            FR.setPower(0.00);
+            BR.setPower(0.00);
+            BL.setPower(0.00);
+            sleep(2500);
+        //while (FL.isBusy()) ;
+            /*Step 2  -  Strafe Right 30 inches (This is still experimental)
             (12.566 is the circumference.) (2.39 rotations for 30 inches)
             (915.804 ticks in 30 inches) (I rounded to 916)
             */
-            FL.setPower(-1.00);
-            FR.setPower(1.00);
-            BL.setPower(1.00);
-            BR.setPower(-1.00);
-            FL.setTargetPosition(916);
-            FR.setTargetPosition(916);
-            BL.setTargetPosition(916);
-            BR.setTargetPosition(916);
-            //Step 4  -  Start Flywheel
+            FL.setPower(0.75);
+            FR.setPower(-0.75);
+            BL.setPower(-0.75);
+            BR.setPower(0.75);
+            sleep(500);
+            FL.setPower(0.00);
+            FR.setPower(0.00);
+            BL.setPower(0.00);
+            BR.setPower(0.00);
+
+
+            //Step 3  -  Start Flywheel
             Flywheel1.setPower(1.00);
             Flywheel2.setPower(1.00);
-            //Step 5  -  Load Flywheel using Flipper
+            sleep(100);
+   // ????????
+            //Step 4  -  Load Flywheel using Flipper
             Loadingservo.setPosition(0.00);
-            sleep(500);
+            sleep(200);
             Loadingservo.setPosition(1.00);
-            /*Step 6  -  Strafe to the right and Shoot at Middle Goal - Strafe Right 8 inches (This is still experimental)
+            sleep(200);
+            /*Step 5  -  Strafe to the right and Shoot at Middle Goal - Strafe Right 8 inches (This is still experimental)
             (12.566 is the circumference.) (0.636 rotations for 8 inches)
             (244.216 ticks in 30 inches) (I rounded to 244)
             */
-            FL.setPower(-1.00);
-            FR.setPower(1.00);
-            BL.setPower(1.00);
-            BR.setPower(-1.00);
-            FL.setTargetPosition(244);
-            FR.setTargetPosition(244);
-            BL.setTargetPosition(244);
-            BR.setTargetPosition(244);
-            sleep(300);
+
+        /*  FL.setPower(0.75);
+            FR.setPower(-0.75);
+            BL.setPower(-0.75);
+            BR.setPower(0.75);
+            sleep(133);
             Loadingservo.setPosition(0.00);
-            sleep(500);
+            sleep(200);
             Loadingservo.setPosition(1.00);
-            //Step 7  -  Strafe to the right and Shoot at Right Goal
-            FL.setPower(-1.00);
-            FR.setPower(1.00);
-            BL.setPower(1.00);
-            BR.setPower(-1.00);
-            FL.setTargetPosition(244);
-            FR.setTargetPosition(244);
-            BL.setTargetPosition(244);
-            BR.setTargetPosition(244);
-            sleep(300);
+            sleep(200);
+          */  //Step 6  -  Strafe to the right and Shoot at Right Goal
+            /*FL.setPower(0.75);
+            FR.setPower(-0.75);
+            BL.setPower(-0.75);
+            BR.setPower(0.75);
+            sleep(133);
             Loadingservo.setPosition(0.00);
-            sleep(500);
+            sleep(200);
             Loadingservo.setPosition(1.00);
-            sleep(300);
+            sleep(200);
             Flywheel1.setPower(0.00);
             Flywheel2.setPower(0.00);
-            /*Step 8  -  Park on white line - I need to go 9 inches forward
+            sleep(100);
+             */
+            /*Step 7  -  Park on white line - I need to go 9 inches forward
             (12.566 inches is the circumference.) (9/12.566=0.716)
             (0.716x383.6=274.74 ticks) (I rounded to 275)
            */
-            FL.setPower(1.00);
-            FR.setPower(1.00);
-            BR.setPower(1.00);
-            BL.setPower(1.00);
-            FL.setTargetPosition(275);
-            FR.setTargetPosition(275);
-            BR.setTargetPosition(275);
-            BL.setTargetPosition(275);
+        /*  FL.setPower(0.75);
+            FR.setPower(0.75);
+            BR.setPower(0.75);
+            BL.setPower(0.75);
+            sleep(150);
+            FL.setPower(0.00);
+            FR.setPower(0.00);
+            BL.setPower(0.00);
+            BR.setPower(0.00);
+           */ sleep(4000);
         }
     }
-}
