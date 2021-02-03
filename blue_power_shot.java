@@ -99,50 +99,50 @@ public class blue_power_shot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY).
         waitForStart();
 
-            //-------------------------------- Variables and Step-By-Step Code --------------------------------\\
+        //-------------------------------- Variables and Step-By-Step Code --------------------------------\\
 
-            // check to see if any buttons are pressed.
+        // check to see if any buttons are pressed.
 
             /*Step 1  -  Drive Forward 62 inches
             (12.566 is the circumference.) (4.93 rotations for 62 inches)
             (1891.148 ticks in 62 inches) (I rounded to 1891)
             */
-            FL.setPower(0.75);
-            FR.setPower(0.75);
-            BR.setPower(0.75);
-            BL.setPower(0.75);
-            sleep(1300);
-            FL.setPower(0.00);
-            FR.setPower(0.00);
-            BR.setPower(0.00);
-            BL.setPower(0.00);
-            sleep(2500);
+        FL.setPower(0.75);
+        FR.setPower(0.75);
+        BR.setPower(0.75);
+        BL.setPower(0.75);
+        sleep(1200);
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BR.setPower(0.00);
+        BL.setPower(0.00);
+        sleep(2500);
         //while (FL.isBusy()) ;
             /*Step 2  -  Strafe Right 30 inches (This is still experimental)
             (12.566 is the circumference.) (2.39 rotations for 30 inches)
             (915.804 ticks in 30 inches) (I rounded to 916)
             */
-            FL.setPower(0.75);
-            FR.setPower(-0.75);
-            BL.setPower(-0.75);
-            BR.setPower(0.75);
-            sleep(500);
-            FL.setPower(0.00);
-            FR.setPower(0.00);
-            BL.setPower(0.00);
-            BR.setPower(0.00);
+        FL.setPower(0.75);
+        FR.setPower(-0.75);
+        BL.setPower(-0.75);
+        BR.setPower(0.75);
+        sleep(1000);
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BL.setPower(0.00);
+        BR.setPower(0.00);
 
 
-            //Step 3  -  Start Flywheel
-            Flywheel1.setPower(1.00);
-            Flywheel2.setPower(1.00);
-            sleep(100);
-   // ????????
-            //Step 4  -  Load Flywheel using Flipper
-            Loadingservo.setPosition(0.00);
-            sleep(200);
-            Loadingservo.setPosition(1.00);
-            sleep(200);
+        //Step 3  -  Start Flywheel
+        Flywheel1.setPower(1.00);
+        Flywheel2.setPower(1.00);
+        sleep(100);
+        // ????????
+        //Step 4  -  Load Flywheel using Flipper
+        Loadingservo.setPosition(0.00);
+        sleep(200);
+       // Loadingservo.setPosition(1.00);
+       // sleep(200);
             /*Step 5  -  Strafe to the right and Shoot at Middle Goal - Strafe Right 8 inches (This is still experimental)
             (12.566 is the circumference.) (0.636 rotations for 8 inches)
             (244.216 ticks in 30 inches) (I rounded to 244)
@@ -185,5 +185,5 @@ public class blue_power_shot extends LinearOpMode {
             BL.setPower(0.00);
             BR.setPower(0.00);
            */ sleep(4000);
-        }
     }
+}
