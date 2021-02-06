@@ -90,7 +90,7 @@ public class Temp_Auto extends LinearOpMode {
 
 
 
-        // while (opModeIsActive()) {
+        //while (opModeIsActive()) {
 
 
 
@@ -109,11 +109,11 @@ public class Temp_Auto extends LinearOpMode {
         */
 
         mcdrive(102);
-        wait(300);
-        mcdrive(-39.8);
-        wait(300);
-        mcstrafe(12,right);
 
+        mcdrive(-39.8);
+
+        mcstrafe(36,right);
+        
 
 
         // This Program uses: Gobilda 5202 435 RPM motors.
@@ -159,12 +159,12 @@ public class Temp_Auto extends LinearOpMode {
         BL.setPower(0.00);
         BR.setPower(0.00);
 
-        while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
+        while(FL.isBusy());
 
 
     }
 
-    public void turnLeft(double inches) {
+    public void mcTurn(double inches, int direction) {
 
         float distance = (((float) inches) * (float) 30.5251030464);
         int distance_int = Math.round(distance);
@@ -174,65 +174,42 @@ public class Temp_Auto extends LinearOpMode {
         int target_position_BL;
         int target_position_BR;
 
-        target_position_FL = (FL.getCurrentPosition() - distance_int);
-        target_position_FR = (FR.getCurrentPosition() + distance_int);
-        target_position_BL = (BL.getCurrentPosition() - distance_int);
-        target_position_BR = (BR.getCurrentPosition() + distance_int);
+        if (direction == 0) {
+            target_position_FL = (FL.getCurrentPosition() - distance_int);
+            target_position_FR = (FR.getCurrentPosition() + distance_int);
+            target_position_BL = (BL.getCurrentPosition() - distance_int);
+            target_position_BR = (BR.getCurrentPosition() + distance_int);
+
+            FL.setTargetPosition(target_position_FL);
+            FR.setTargetPosition(target_position_FR);
+            BL.setTargetPosition(target_position_BL);
+            BR.setTargetPosition(target_position_BR);
+        }
+        if (direction == 1){
+            target_position_FL = (FL.getCurrentPosition() + distance_int);
+            target_position_FR = (FR.getCurrentPosition() - distance_int);
+            target_position_BL = (BL.getCurrentPosition() + distance_int);
+            target_position_BR = (BR.getCurrentPosition() - distance_int);
+
+            FL.setTargetPosition(target_position_FL);
+            FR.setTargetPosition(target_position_FR);
+            BL.setTargetPosition(target_position_BL);
+            BR.setTargetPosition(target_position_BR);
+        }
 
         FL.setPower(1.00);
         FR.setPower(1.00);
         BL.setPower(1.00);
         BR.setPower(1.00);
 
-        FL.setTargetPosition(target_position_FL);
-        FR.setTargetPosition(target_position_FR);
-        BL.setTargetPosition(target_position_BL);
-        BR.setTargetPosition(target_position_BR);
-
         FL.setPower(0.00);
         FR.setPower(0.00);
         BL.setPower(0.00);
         BR.setPower(0.00);
 
-        while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
+        while(FL.isBusy());
     }
 
-
-
-
-
-    public void turnRight(double inches) {
-
-        float distance = (((float) inches) * (float) 30.5251030464);
-        int distance_int = Math.round(distance);
-
-        int target_position_FL;
-        int target_position_FR;
-        int target_position_BL;
-        int target_position_BR;
-
-        target_position_FL = (FL.getCurrentPosition() + distance_int);
-        target_position_FR = (FR.getCurrentPosition() - distance_int);
-        target_position_BL = (BL.getCurrentPosition() + distance_int);
-        target_position_BR = (BR.getCurrentPosition() - distance_int);
-
-        FL.setPower(1.00);
-        FR.setPower(1.00);
-        BL.setPower(1.00);
-        BR.setPower(1.00);
-
-        FL.setTargetPosition(target_position_FL);
-        FR.setTargetPosition(target_position_FR);
-        BL.setTargetPosition(target_position_BL);
-        BR.setTargetPosition(target_position_BR);
-
-        FL.setPower(0.00);
-        FR.setPower(0.00);
-        BL.setPower(0.00);
-        BR.setPower(0.00);
-
-        while(FL.isBusy() || FR.isBusy() || BL.isBusy() || BR.isBusy());
-    }
     public void mcstrafe(double inches, int direction) {
 
 
