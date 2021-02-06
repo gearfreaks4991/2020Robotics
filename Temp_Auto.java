@@ -96,11 +96,11 @@ public class Temp_Auto extends LinearOpMode {
 
         /* The portion of code below should do the following, in order:
 
-        1: Drive from the starting position 102 Inches forward, to push the Wobble Goal into the dropoff zone.
+        1: Drive from the starting position 123 Inches forward, to push the Wobble Goal into the dropoff zone.
 
-        2: Drive from the Dropoff Zone backwards 39.8 Inches so that the robot is located BEHIND the Firing Line.
+        2: Drive from the Dropoff Zone backwards 40 Inches so that the robot is located BEHIND the Firing Line.
 
-        3: Strafe 12 Inches to the right so that it is lined up with the Power Shot.
+        3: Strafe 36 Inches to the right so that it is lined up with the Power Shot.
 
         I believe that after this, we would need to integrate other Autonomous Codes into this one, or make one large Main Code.
 
