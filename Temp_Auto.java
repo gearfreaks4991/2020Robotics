@@ -108,9 +108,9 @@ public class Temp_Auto extends LinearOpMode {
         If we are starting on the left, we need to add an additional 24 Inches to the Strafe portion, in total 36 Inches, due to it being farther away from the middle.
         */
 
-        mcdrive(102);
+        mcdrive(123);
 
-        mcdrive(-39.8);
+        mcdrive(-40);
 
         mcstrafe(36,right);
         
