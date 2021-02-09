@@ -55,16 +55,20 @@ public class Temp_Auto extends LinearOpMode {
         // Hardware mapping the Drivetrain's 4 main drive motors,
         // they should be Gobilda 5202 which spin at 435 RPM.
         FL = hardwareMap.dcMotor.get("lf");
-        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FL.setTargetPosition(0);
+        FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FR = hardwareMap.dcMotor.get("rf");
-        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FR.setTargetPosition(0);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BL = hardwareMap.dcMotor.get("lb");
-        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BL.setTargetPosition(0);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BR = hardwareMap.dcMotor.get("rb");
-        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BR.setTargetPosition(0);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // - intake
@@ -95,16 +99,10 @@ public class Temp_Auto extends LinearOpMode {
 
 
         /* The portion of code below should do the following, in order:
-
         1: Drive from the starting position 123 Inches forward, to push the Wobble Goal into the dropoff zone.
-
         2: Drive from the Dropoff Zone backwards 40 Inches so that the robot is located BEHIND the Firing Line.
-
         3: Strafe 36 Inches to the right so that it is lined up with the Power Shot.
-
         I believe that after this, we would need to integrate other Autonomous Codes into this one, or make one large Main Code.
-
-
         If we are starting on the left, we need to add an additional 24 Inches to the Strafe portion, in total 36 Inches, due to it being farther away from the middle.
         */
 
@@ -113,7 +111,7 @@ public class Temp_Auto extends LinearOpMode {
         mcdrive(-40);
 
         mcstrafe(36,right);
-        
+
 
 
         // This Program uses: Gobilda 5202 435 RPM motors.
@@ -154,19 +152,31 @@ public class Temp_Auto extends LinearOpMode {
         BL.setTargetPosition(target_position_BL);
         BR.setTargetPosition(target_position_BR);
 
+        telemetry.addData("FL Wheel Position:", FL.getCurrentPosition());
+        telemetry.addData("FR Wheel Position:", FR.getCurrentPosition());
+        telemetry.addData("BL Wheel Position:", BL.getCurrentPosition());
+        telemetry.addData("BR Wheel Position:", BR.getCurrentPosition());
+        telemetry.update();
+
+        while(FL.isBusy()||FR.isBusy()||BL.isBusy()||BR.isBusy());;
+
         FL.setPower(0.00);
         FR.setPower(0.00);
         BL.setPower(0.00);
         BR.setPower(0.00);
 
-        while(FL.isBusy());
+
 
 
     }
 
+
+
+
+
     public void mcTurn(double inches, int direction) {
 
-        float distance = (((float) inches) * (float) 30.5251030464);
+        float distance = (((float) inches) * ((float) 30.5251030464));
         int distance_int = Math.round(distance);
 
         int target_position_FL;
@@ -202,12 +212,13 @@ public class Temp_Auto extends LinearOpMode {
         BL.setPower(1.00);
         BR.setPower(1.00);
 
+        while(FL.isBusy()||FR.isBusy()||BL.isBusy()||BR.isBusy());
+
         FL.setPower(0.00);
         FR.setPower(0.00);
         BL.setPower(0.00);
         BR.setPower(0.00);
 
-        while(FL.isBusy());
     }
 
     public void mcstrafe(double inches, int direction) {
@@ -253,15 +264,12 @@ public class Temp_Auto extends LinearOpMode {
         BL.setPower(1.00);
         BR.setPower(1.00);
 
-
+        while(FL.isBusy()||FR.isBusy()||BL.isBusy()||BR.isBusy());
 
         FL.setPower(0.00);
         FR.setPower(0.00);
         BL.setPower(0.00);
         BR.setPower(0.00);
-
-        while(FL.isBusy());
-
 
     }
 
