@@ -53,10 +53,14 @@ public class blue_power_shot_ticks extends LinearOpMode {
         FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FL.setTargetPosition(0);
+        FR.setTargetPosition(0);
+        BL.setTargetPosition(0);
+        BR.setTargetPosition(0);
+        FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Reversing 2 of the Drivetrain motors to allow the wheels to all move in the correct direction.
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -111,11 +115,20 @@ public class blue_power_shot_ticks extends LinearOpMode {
         FR.setPower(1.00);
         BR.setPower(1.00);
         BL.setPower(1.00);
-        FL.setTargetPosition(1891);
-        FR.setTargetPosition(1891);
-        BL.setTargetPosition(1891);
-        BR.setTargetPosition(1891);
-        //while (FL.isBusy()) ;
+        FL.setTargetPosition(3000);
+        FR.setTargetPosition(3000);
+        BL.setTargetPosition(3000);
+        BR.setTargetPosition(3000);
+        telemetry.addData("FL Position", FL.getCurrentPosition());
+        telemetry.addData("FR Position", FR.getCurrentPosition());
+        telemetry.addData("BL Position", BL.getCurrentPosition());
+        telemetry.addData("BR Position", BR.getCurrentPosition());
+        telemetry.update();
+        while (FL.isBusy());
+        FL.setPower(0.00);
+        FR.setPower(0.00);
+        BR.setPower(0.00);
+        BL.setPower(0.00);
             /*Step 2  -  Strafe Right 30 inches (This is still experimental)
             (12.566 is the circumference.) (3.978 rotations for 50 inches)
             (1526.34 ticks in 50 inches) (I rounded to 1526)
@@ -189,3 +202,7 @@ public class blue_power_shot_ticks extends LinearOpMode {
             FR.setPower(0.00);
             BL.setPower(0.00);
             BR.setPower(0.00);
+
+         */
+    }
+}
