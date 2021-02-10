@@ -55,17 +55,27 @@ public class wobble_park extends LinearOpMode {
         // Hardware mapping the Drivetrain's 4 main drive motors,
         // they should be Gobilda 5202 which spin at 435 RPM.
         FL = hardwareMap.dcMotor.get("lf");
-        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FL.setTargetPosition(0);
+        FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
         FR = hardwareMap.dcMotor.get("rf");
-        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setTargetPosition(0);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
         BL = hardwareMap.dcMotor.get("lb");
-        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setTargetPosition(0);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
         BR = hardwareMap.dcMotor.get("rb");
-        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setTargetPosition(0);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // - intake
         Intake = hardwareMap.dcMotor.get("intake");
@@ -98,16 +108,20 @@ public class wobble_park extends LinearOpMode {
         position 102 Inches forward, to push the Wobble Goal into the dropoff zone.
         */
 
-        mcdrive(102);
-        mcdrive(-35);
+         mcdrive(105);
+         mcdrive(-36);
+
+
+
+
 
     }
 
-  // This Program uses: Gobilda 5202 435 RPM motors.
+    // This Program uses: Gobilda 5202 435 RPM motors.
     // Which has 383.6 ticks per/Revolution. Our wheel are 4" in diameter.
     // Circumference is 12.5663706144".
     // Approx. 30.5251030464" Ticks Per Inch.
-    //because we are using a 1:2 ratio on our wheels we have to double the previous number 
+    //because we are using a 1:2 ratio on our wheels we have to double the previous number
     //which comes out to 61.050206128
     public void mcdrive(double inches) {
 
@@ -139,7 +153,7 @@ public class wobble_park extends LinearOpMode {
         BL.setPower(0.00);
         BR.setPower(0.00);
 */
-            while(FL.isBusy());
+            while(FL.isBusy()|| FR.isBusy()||BL.isBusy()||BR.isBusy());
 
 
     }
