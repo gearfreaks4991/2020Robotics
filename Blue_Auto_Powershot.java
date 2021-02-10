@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Autonomous(name="Temp_Auto")
-public class Temp_Auto extends LinearOpMode {
+@Autonomous(name="Blue_Auto_Powershot")
+public class Blue_Auto_Powershot extends LinearOpMode {
     // Motors are Gobilda 5202 and rotate at around 435 Revolutions/Rotations Per Minute (RPM)
     DcMotor FL;
     DcMotor FR;
@@ -54,22 +54,27 @@ public class Temp_Auto extends LinearOpMode {
 
         // Hardware mapping the Drivetrain's 4 main drive motors,
         // they should be Gobilda 5202 which spin at 435 RPM.
+
         FL = hardwareMap.dcMotor.get("lf");
+        FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FL.setTargetPosition(0);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         FR = hardwareMap.dcMotor.get("rf");
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FR.setTargetPosition(0);
         FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         BL = hardwareMap.dcMotor.get("lb");
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BL.setTargetPosition(0);
         BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         BR = hardwareMap.dcMotor.get("rb");
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BR.setTargetPosition(0);
         BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         // - intake
         Intake = hardwareMap.dcMotor.get("intake");
@@ -107,11 +112,12 @@ public class Temp_Auto extends LinearOpMode {
         */
 
         mcdrive(123);
-
+        sleep(300);
         mcdrive(-40);
-
+        sleep(300);
         mcstrafe(36,right);
-
+        sleep(300);
+        powershot();
 
 
         // This Program uses: Gobilda 5202 435 RPM motors.
@@ -270,6 +276,77 @@ public class Temp_Auto extends LinearOpMode {
         FR.setPower(0.00);
         BL.setPower(0.00);
         BR.setPower(0.00);
+
+    }
+
+    public void powershot() {
+
+        // Firing sequence for loading and firing the 1st ring.
+        loadingservo.setPosition(0.00);
+        telemetry.addData("Loading Rings into Flywheel.", " ");
+        telemetry.update();
+        sleep(200);
+        loadingservo.setPosition(1.00);
+        telemetry.addData("Returning to resting position.", " ");
+        telemetry.update();
+        sleep(100);
+
+        telemetry.addData("Firing 1st Ring.","");
+        telemetry.update();
+
+        Flywheel1.setPower(0.50);
+        Flywheel2.setPower(0.50);
+        sleep(500);
+        Flywheel1.setPower(0);
+        Flywheel2.setPower(0);
+
+        // Strafing to line up with the 2nd Power shot Goal.
+        mcstrafe(3,right);
+        sleep(200);
+
+        // Firing sequence for loading and firing the 2nd ring.
+        loadingservo.setPosition(0.00);
+        telemetry.addData("Loading Rings into Flywheel.", " ");
+        telemetry.update();
+        sleep(200);
+        loadingservo.setPosition(1.00);
+        telemetry.addData("Returning to resting position.", " ");
+        telemetry.update();
+        sleep(100);
+
+        telemetry.addData("Firing 2nd Ring.","");
+        telemetry.update();
+
+        Flywheel1.setPower(0.50);
+        Flywheel2.setPower(0.50);
+        sleep(500);
+        Flywheel1.setPower(0);
+        Flywheel2.setPower(0);
+
+        // Strafing to line up with the 3rd Power shot Goal.
+        mcstrafe(3,right);
+        sleep(200);
+
+
+
+        // Firing sequence for loading and firing the 3rd ring.
+        loadingservo.setPosition(0.00);
+        telemetry.addData("Loading Rings into Flywheel.", " ");
+        telemetry.update();
+        sleep(200);
+        loadingservo.setPosition(1.00);
+        telemetry.addData("Returning to resting position.", " ");
+        telemetry.update();
+        sleep(100);
+
+        telemetry.addData("Firing 3rd Ring.","");
+        telemetry.update();
+
+        Flywheel1.setPower(0.50);
+        Flywheel2.setPower(0.50);
+        sleep(500);
+        Flywheel1.setPower(0);
+        Flywheel2.setPower(0);
 
     }
 
