@@ -281,7 +281,9 @@ public class Blue_Auto_Powershot extends LinearOpMode {
 
     public void powershot() {
 
-        // Firing sequence for loading and firing the 1st ring.
+        // Firing sequence for loading and firing the 1st ring. 
+        Flywheel1.setPower(0.50);
+        Flywheel2.setPower(0.50);
         loadingservo.setPosition(0.00);
         telemetry.addData("Loading Rings into Flywheel.", " ");
         telemetry.update();
@@ -293,18 +295,14 @@ public class Blue_Auto_Powershot extends LinearOpMode {
 
         telemetry.addData("Firing 1st Ring.","");
         telemetry.update();
-
-        Flywheel1.setPower(0.50);
-        Flywheel2.setPower(0.50);
+        
         sleep(500);
         Flywheel1.setPower(0);
         Flywheel2.setPower(0);
 
-        // Strafing to line up with the 2nd Power shot Goal.
-        mcstrafe(3,right);
-        sleep(200);
-
-        // Firing sequence for loading and firing the 2nd ring.
+        // Firing sequence for loading and firing the 2nd ring. 
+        Flywheel1.setPower(0.50);
+        Flywheel2.setPower(0.50);
         loadingservo.setPosition(0.00);
         telemetry.addData("Loading Rings into Flywheel.", " ");
         telemetry.update();
@@ -317,19 +315,13 @@ public class Blue_Auto_Powershot extends LinearOpMode {
         telemetry.addData("Firing 2nd Ring.","");
         telemetry.update();
 
-        Flywheel1.setPower(0.50);
-        Flywheel2.setPower(0.50);
         sleep(500);
         Flywheel1.setPower(0);
         Flywheel2.setPower(0);
 
-        // Strafing to line up with the 3rd Power shot Goal.
-        mcstrafe(3,right);
-        sleep(200);
-
-
-
-        // Firing sequence for loading and firing the 3rd ring.
+        // Firing sequence for loading and firing the 3rd ring. 
+        Flywheel1.setPower(0.50);
+        Flywheel2.setPower(0.50);
         loadingservo.setPosition(0.00);
         telemetry.addData("Loading Rings into Flywheel.", " ");
         telemetry.update();
@@ -342,8 +334,6 @@ public class Blue_Auto_Powershot extends LinearOpMode {
         telemetry.addData("Firing 3rd Ring.","");
         telemetry.update();
 
-        Flywheel1.setPower(0.50);
-        Flywheel2.setPower(0.50);
         sleep(500);
         Flywheel1.setPower(0);
         Flywheel2.setPower(0);
